@@ -29,10 +29,10 @@ const App = () => {
               <ForgotPassword />
             </Route>
             <PrivateRoute>
-              <Addresses />
+              <Friends />
             </PrivateRoute>
             <PrivateRoute>
-              <Friends />
+              <Addresses />
             </PrivateRoute>
             <Route path="*">
               <Login />
