@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useHistory, useLocation, Redirect } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
-import { fakeAuth } from "../helpers/PrivateRoute";
+import { fakeAuth } from "../helpers/FakeAuth";
+import CustomInput from "../components/CustomInput";
 
 export default function Login() {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const { state } = useLocation();
   const history = useHistory();
@@ -18,13 +22,47 @@ export default function Login() {
   if (redirectToReferrer) {
     return <Redirect to={state?.from || "/"} />;
   }
+  const handleChangeEmail = (e) => {
+    setEmail(e.currentTarget.value);
+  };
+  const handleChangePassword = (e) => {
+    setPassword(e.currentTarget.value);
+  };
 
   return (
     <div>
-      <button onClick={login}>Log in</button>
-      <button onClick={() => history.push("/forgotPassword")}>
-        Forgot my password
-      </button>
+      <form className="form">
+        <CustomInput
+          labelText="Email"
+          formControlProps={{
+            fullWidth: false,
+          }}
+          handleChange={handleChangeEmail}
+          type="text"
+        />
+        <br />
+        <CustomInput
+          labelText="Password"
+          formControlProps={{
+            fullWidth: false,
+          }}
+          handleChange={handleChangePassword}
+          type="password"
+        />
+        <br />
+        <br />
+        <br />
+        <Button variant="contained" color="primary" onClick={login}>
+          Login
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => history.push("/forgotPassword")}
+        >
+          Forgot my password
+        </Button>
+      </form>
     </div>
   );
 }

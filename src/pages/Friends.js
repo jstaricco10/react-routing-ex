@@ -80,6 +80,9 @@ export default function Friends() {
                   >
                     {friend.email}
                   </Typography>
+                  <Button size="small" color="primary">
+                    <Link to="/friends">Perfil</Link>
+                  </Button>
                 </CardContent>
               </CardActionArea>
             </Card>

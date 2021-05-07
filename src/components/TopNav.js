@@ -8,6 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { Button, InputLabel } from "@material-ui/core";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { fakeAuth } from "../helpers/FakeAuth";
 
 export default function BottomNav() {
   return (
@@ -18,11 +19,17 @@ export default function BottomNav() {
             color="secondary"
             aria-label="outlined primary button group"
           >
-            <Button>
-              <InputLabel>
-                <Link to="/login">Login</Link>
-              </InputLabel>
-            </Button>
+            {!fakeAuth.isAuthenticated ? (
+              <Button>
+                <InputLabel>
+                  <Link to="/login">Login</Link>
+                </InputLabel>
+              </Button>
+            ) : (
+              <Button>
+                <InputLabel>Signout</InputLabel>
+              </Button>
+            )}
             <Button>
               <InputLabel>
                 <Link to="/">Home</Link>
