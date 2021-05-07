@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  Route,
+  useRouteMatch,
+  Switch,
+} from "react-router-dom";
 
 import faker from "faker";
 
@@ -13,6 +19,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+
+import Friend from "../components/Friend";
 
 function generateFriends() {
   let friends = [];
@@ -48,9 +56,18 @@ const useStyles = makeStyles({
 export default function Friends() {
   const [friends, setFriends] = useState(generateFriends().data);
   const classes = useStyles();
+  const location = useLocation();
+  let match = useRouteMatch();
+
+  // console.log(location);
+  console.log(`${match.url}/2`);
 
   return (
     <div style={{ flexGrow: 1, width: "100%" }}>
+      <Button>
+        <Link to={`${match.url}/2`}>Perfil</Link>
+      </Button>
+
       <Grid container className={classes.root} spacing={3}>
         <Grid
           item
@@ -62,7 +79,7 @@ export default function Friends() {
           spacing={6}
         >
           {friends.map((friend) => (
-            <Card className={classes.root}>
+            <Card key={friend.id} className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -80,15 +97,17 @@ export default function Friends() {
                   >
                     {friend.email}
                   </Typography>
-                  <Button size="small" color="primary">
-                    <Link to="/friends">Perfil</Link>
-                  </Button>
+                  <Link to={`${match.url}/2`}>Perfil</Link>
                 </CardContent>
               </CardActionArea>
             </Card>
           ))}
         </Grid>
       </Grid>
+
+      {/* <Switch>
+        <Route path={`${match.url}/:id`} component={Friend} />
+      </Switch> */}
     </div>
   );
 }

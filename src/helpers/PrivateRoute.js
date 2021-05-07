@@ -2,13 +2,14 @@ import React from "react";
 
 import { Route, Redirect } from "react-router-dom";
 import { fakeAuth } from "./FakeAuth";
+import ls from "local-storage";
 
 export default function PrivateRoute({ children, ...rest }) {
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        return fakeAuth.isAuthenticated === true ? (
+        return ls.get("isAuthenticated") ? (
           children
         ) : (
           <Redirect

@@ -1,16 +1,6 @@
 import React, { useState, useContext, createContext } from "react";
 
-const fakeAuth = {
-  isAuthenticated: false,
-  signin(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
-  },
-};
+import { fakeAuth } from "../helpers/FakeAuth";
 
 const authContext = createContext();
 
@@ -26,8 +16,8 @@ export function useAuth() {
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const signin = (cb) => {
-    return fakeAuth.signin(() => {
+  const authenticate = (cb) => {
+    return fakeAuth.authenticate(() => {
       setUser("user");
       cb();
     });
@@ -42,7 +32,7 @@ function useProvideAuth() {
 
   return {
     user,
-    signin,
+    authenticate,
     signout,
   };
 }

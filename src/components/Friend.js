@@ -1,7 +1,9 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 export default function Friend(props) {
-  const { id, firstName, lastName, email } = props;
+  // const {firstName, lastName, email } = props;
+  let { id } = useParams();
 
-  return <div>Friend</div>;
+  return <h1>Friend {id}</h1>;
 }

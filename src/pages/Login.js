@@ -5,10 +5,12 @@ import { Button } from "@material-ui/core";
 import { fakeAuth } from "../helpers/FakeAuth";
 import CustomInput from "../components/CustomInput";
 
-export default function Login() {
+export default function Login(props) {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleAuth = props.handleAuth;
 
   const { state } = useLocation();
   const history = useHistory();
@@ -16,6 +18,7 @@ export default function Login() {
   const login = () => {
     fakeAuth.authenticate(() => {
       setRedirectToReferrer(true);
+      handleAuth();
     });
   };
 
