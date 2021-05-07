@@ -10,6 +10,7 @@ import TopNav from "./components/TopNav";
 import Friend from "./components/Friend";
 import ProvideAuth from "./helpers/ProvideAuth";
 import PrivateRoute from "./helpers/PrivateRoute";
+import Address from "./components/Address";
 
 import { fakeAuth } from "./helpers/FakeAuth";
 
@@ -45,7 +46,9 @@ const App = () => {
             <PrivateRoute exact path="/friends">
               <Friends />
             </PrivateRoute>
-            <Route exact path="/friends/:id" component={Friend} />
+            <Route exact path="/friends/:id">
+              <Friend />
+            </Route>
             <PrivateRoute path="/addresses">
               <Addresses />
             </PrivateRoute>

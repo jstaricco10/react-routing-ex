@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  Link,
-  useLocation,
-  Route,
-  useRouteMatch,
-  Switch,
-} from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 import faker from "faker";
 
@@ -49,25 +43,18 @@ const useStyles = makeStyles({
     margin: "30px",
   },
   media: {
-    height: 140,
+    height: 230,
+    width: 230,
   },
 });
 
 export default function Friends() {
   const [friends, setFriends] = useState(generateFriends().data);
   const classes = useStyles();
-  const location = useLocation();
   let match = useRouteMatch();
-
-  // console.log(location);
-  console.log(`${match.url}/2`);
 
   return (
     <div style={{ flexGrow: 1, width: "100%" }}>
-      <Button>
-        <Link to={`${match.url}/2`}>Perfil</Link>
-      </Button>
-
       <Grid container className={classes.root} spacing={3}>
         <Grid
           item
@@ -79,35 +66,44 @@ export default function Friends() {
           spacing={6}
         >
           {friends.map((friend) => (
-            <Card key={friend.id} className={classes.root}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={friend.avatar}
-                  title="Contemplative Reptile"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {friend.firstName} {friend.lastName}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {friend.email}
-                  </Typography>
-                  <Link to={`${match.url}/2`}>Perfil</Link>
-                </CardContent>
-              </CardActionArea>
-            </Card>
+            <Link
+              key={friend.id}
+              to={{
+                pathname: `${match.url}/${friend.id}`,
+                props: {
+                  id: friend.id,
+                  firstName: friend.firstName,
+                  lastName: friend.lastName,
+                  email: friend.email,
+                  avatar: friend.avatar,
+                },
+              }}
+            >
+              <Card key={friend.id} className={classes.root}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={friend.avatar}
+                    title="Contemplative Reptile"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {friend.firstName} {friend.lastName}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {friend.email}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Link>
           ))}
         </Grid>
       </Grid>
-
-      {/* <Switch>
-        <Route path={`${match.url}/:id`} component={Friend} />
-      </Switch> */}
     </div>
   );
 }
