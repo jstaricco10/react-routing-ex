@@ -1,29 +1,35 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Friends from "./pages/Friends";
-import ForgotPassword from "./pages/ForgotPassword";
-import Addresses from "./pages/Addresses";
-import TopNav from "./components/TopNav";
-import Friend from "./components/Friend";
-import ProvideAuth from "./helpers/ProvideAuth";
-import PrivateRoute from "./helpers/PrivateRoute";
-import Address from "./components/Address";
+import Home from './components/Home';
+import Login from './components/Login';
+import Friends from './components/Friends';
+import ForgotPassword from './components/ForgotPassword';
+import Addresses from './components/Addresses';
+import TopNav from './sharedComponents/TopNav';
+import Friend from './sharedComponents/Friend';
+import ProvideAuth from './helpers/ProvideAuth';
+import PrivateRoute from './helpers/PrivateRoute';
+import { generateFriends } from './helpers/GenerateData';
+import { generateAddresses } from './helpers/GenerateData';
 
-import { fakeAuth } from "./helpers/FakeAuth";
+import ls from 'local-storage';
 
-import ls from "local-storage";
+import './App.css';
 
-import "./App.css";
-
-ls.set("isAuthenticated", false);
+ls.set('isAuthenticated', false);
 
 const App = () => {
   const [userAutheticated, setUserAutheticated] = useState(
-    ls.get("isAuthenticated")
+    ls.get('isAuthenticated')
   );
+  useEffect(() => {
+    const friends = generateFriends().data;
+    const addresses = generateAddresses().data;
+    ls.set('friends', friends);
+    ls.set('addresses', addresses);
+  });
+
   const handleAuth = () => {
     setUserAutheticated(!userAutheticated);
   };
@@ -31,15 +37,15 @@ const App = () => {
   return (
     <ProvideAuth>
       <Router>
-        {userAutheticated ? <TopNav /> : ""}
+        {userAutheticated && <TopNav handleAuth={handleAuth} />}
         <div className="App">
           <Switch>
             <Route path="/login">
               <Login handleAuth={handleAuth} />
             </Route>
-            <Route exact path="/">
+            <PrivateRoute exact path="/">
               <Home />
-            </Route>
+            </PrivateRoute>
             <Route path="/forgotPassword">
               <ForgotPassword />
             </Route>
@@ -53,7 +59,7 @@ const App = () => {
               <Addresses />
             </PrivateRoute>
             <Route path="*">
-              <Login handleAuth={handleAuth} />
+              <Login unvalidAdd handleAuth={handleAuth} />
             </Route>
           </Switch>
         </div>

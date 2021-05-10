@@ -1,46 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from 'react-router-dom';
 
-import faker from "faker";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-
-import Friend from "../components/Friend";
-
-function generateFriends() {
-  let friends = [];
-
-  for (let id = 1; id <= 100; id++) {
-    let firstName = faker.name.firstName();
-    let lastName = faker.name.lastName();
-    let email = faker.internet.email();
-    let avatar = faker.internet.avatar();
-
-    friends.push({
-      id,
-      firstName,
-      lastName,
-      email,
-      avatar,
-    });
-  }
-
-  return { data: friends };
-}
+import ls from 'local-storage';
 
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
-    margin: "30px",
+    margin: '30px',
   },
   media: {
     height: 230,
@@ -49,12 +24,12 @@ const useStyles = makeStyles({
 });
 
 export default function Friends() {
-  const [friends, setFriends] = useState(generateFriends().data);
+  const [friends, setFriends] = useState(ls.get('friends'));
   const classes = useStyles();
   let match = useRouteMatch();
 
   return (
-    <div style={{ flexGrow: 1, width: "100%" }}>
+    <div style={{ flexGrow: 1, width: '100%' }}>
       <Grid container className={classes.root} spacing={3}>
         <Grid
           item

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useHistory, useLocation, Redirect } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import React, { useState } from 'react';
+import { useHistory, useLocation, Redirect } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
-import { fakeAuth } from "../helpers/FakeAuth";
-import CustomInput from "../components/CustomInput";
+import { fakeAuth } from '../helpers/FakeAuth';
+import CustomInput from '../sharedComponents/CustomInput';
 
 export default function Login(props) {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleAuth = props.handleAuth;
+  const { handleAuth, unvalidAdd } = props;
 
   const { state } = useLocation();
   const history = useHistory();
@@ -23,7 +23,7 @@ export default function Login(props) {
   };
 
   if (redirectToReferrer) {
-    return <Redirect to={state?.from || "/"} />;
+    return <Redirect to={state?.from || '/'} />;
   }
   const handleChangeEmail = (e) => {
     setEmail(e.currentTarget.value);
@@ -31,6 +31,8 @@ export default function Login(props) {
   const handleChangePassword = (e) => {
     setPassword(e.currentTarget.value);
   };
+
+  if (unvalidAdd) return <Redirect to="/login" />;
 
   return (
     <div>
@@ -61,7 +63,7 @@ export default function Login(props) {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => history.push("/forgotPassword")}
+          onClick={() => history.push('/forgotPassword')}
         >
           Forgot my password
         </Button>
