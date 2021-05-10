@@ -20,7 +20,7 @@ import './App.css';
 ls.set('isAuthenticated', false);
 
 const App = () => {
-  const [userAutheticated, setUserAutheticated] = useState(
+  const [userAuthenticated, setUserAuthenticated] = useState(
     ls.get('isAuthenticated')
   );
   useEffect(() => {
@@ -31,13 +31,13 @@ const App = () => {
   });
 
   const handleAuth = () => {
-    setUserAutheticated(!userAutheticated);
+    setUserAuthenticated(!userAuthenticated);
   };
 
   return (
     <ProvideAuth>
       <Router>
-        {userAutheticated && <TopNav handleAuth={handleAuth} />}
+        {userAuthenticated && <TopNav handleAuth={handleAuth} />}
         <div className="App">
           <Switch>
             <Route path="/login">
@@ -59,7 +59,11 @@ const App = () => {
               <Addresses />
             </PrivateRoute>
             <Route path="*">
-              <Login unvalidAdd handleAuth={handleAuth} />
+              {userAuthenticated ? (
+                <Home />
+              ) : (
+                <Login unvalidAdd handleAuth={handleAuth} />
+              )}
             </Route>
           </Switch>
         </div>

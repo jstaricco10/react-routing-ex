@@ -41,3 +41,16 @@ export function generateAddresses() {
 
   return { data: addresses };
 }
+
+export function generateQuery(objToQuery, url) {
+  const { id, ...objToQueryNoId } = objToQuery;
+  let query = `${url}/${id}?`;
+  let keys = Object.keys(objToQueryNoId);
+  const len = keys.length;
+  Object.entries(objToQueryNoId).map(
+    (key) => (query += `${key[0]}=${key[1]}&`)
+  );
+  console.log(query);
+  if (len > 0) query = query.slice(0, -1);
+  return query;
+}

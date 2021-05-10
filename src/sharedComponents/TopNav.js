@@ -42,15 +42,13 @@ export default function TopNav(props) {
                 </InputLabel>
               </Button>
             )}
-            {navAddresses.map((ad) => {
-              return (
-                <Button>
-                  <InputLabel>
-                    <Link to={ad.route}>{ad.label}</Link>
-                  </InputLabel>
-                </Button>
-              );
-            })}
+            {navAddresses.map((ad) => (
+              <Button key={ad.label}>
+                <InputLabel>
+                  <Link to={ad.route}>{ad.label}</Link>
+                </InputLabel>
+              </Button>
+            ))}
           </ButtonGroup>
         </Toolbar>
       </AppBar>

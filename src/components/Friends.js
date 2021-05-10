@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Link, useRouteMatch } from 'react-router-dom';
 
@@ -23,8 +23,9 @@ const useStyles = makeStyles({
   },
 });
 
+const friends = ls.get('friends');
+
 export default function Friends() {
-  const [friends, setFriends] = useState(ls.get('friends'));
   const classes = useStyles();
   let match = useRouteMatch();
 
