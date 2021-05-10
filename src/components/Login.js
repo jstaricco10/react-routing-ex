@@ -16,10 +16,12 @@ export default function Login(props) {
   const history = useHistory();
 
   const login = () => {
-    fakeAuth.authenticate(() => {
-      setRedirectToReferrer(true);
-      handleAuth();
-    });
+    email !== '' && password !== ''
+      ? fakeAuth.authenticate(() => {
+          setRedirectToReferrer(true);
+          handleAuth();
+        })
+      : alert('Please enter email and password');
   };
 
   if (redirectToReferrer) {
